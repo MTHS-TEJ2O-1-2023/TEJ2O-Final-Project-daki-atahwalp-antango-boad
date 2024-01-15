@@ -6,18 +6,18 @@
 */
 
 // variables
-let signal : number = 0
+let signal: number = 0
 
 // on start (from Micro:bit proximity beacon)
 radio.setGroup(11)
 radio.setTransmitPower(1)
 basic.forever(function () {
-    radio.sendString('1')
-    basic.pause(200)
+  radio.sendString('1')
+  basic.pause(200)
 })
 
 // On shake flash '!'
-input.onGesture(Gesture.Shake, function() {
+input.onGesture(Gesture.Shake, function () {
   basic.showString('!')
 })
 
@@ -29,3 +29,5 @@ radio.onReceivedString(function (receivedString) {
     basic.showString('*')
   }
 })
+
+// 
