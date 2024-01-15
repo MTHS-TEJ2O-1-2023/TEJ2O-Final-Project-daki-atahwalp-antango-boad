@@ -18,7 +18,8 @@ basic.forever(function () {
 
 // On shake flash '!'
 input.onGesture(Gesture.Shake, function () {
-  basic.showIcon(IconNames.Diamond)
+  basic.showString('!')
+  basic.pause(200)
 })
 
 // Check recieved signal strength and if signal strength is less than -65 display '*'
@@ -27,5 +28,6 @@ radio.onReceivedString(function (receivedString) {
   signal = radio.receivedPacket(RadioPacketProperty.SignalStrength)
   if (signal <= -65) {
     basic.showString('*')
+    basic.pause(200)
   }
 })
