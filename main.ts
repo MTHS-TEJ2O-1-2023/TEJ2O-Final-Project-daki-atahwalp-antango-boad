@@ -2,24 +2,30 @@
  *
  * Created by: Daki A.B
  * Created on: Jan 2024
- * This program ...
+ * This program does the Iron man thing by setting up a proximity beacon and a gesture shake to act as the repulsor shooting
 */
 
 // variables
 let signal : number = 0
 
-// on start
+// on start (from Micro:bit proximity beacon)
 radio.setGroup(11)
 radio.setTransmitPower(1)
 basic.forever(function () {
-    radio.sendString("1")
+    radio.sendString('1')
     basic.pause(200)
 })
 
+// On shake flash '!'
+input.onGesture(Gesture.Shake, function() {
+  basic.showString('!')
+})
+
+// Check recieved signal strength and if signal strength is less than -65 display '*'
 radio.onReceivedString(function (receivedString) {
+  basic.clearScreen()
   signal = radio.receivedPacket(RadioPacketProperty.SignalStrength)
-  led.plotBarGraph(
-    Math.map(signal, -95, -42, 0, 9),
-    9
-  )
+  if (signal <= -65) {
+    basic.showString('*')
+  }
 })
