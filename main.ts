@@ -16,7 +16,7 @@ basic.forever(function () {
   basic.pause(200)
 })
 
-// On shake flash '!' 
+// On shake flash '!'
 input.onGesture(Gesture.Shake, function () {
   basic.showIcon(IconNames.Diamond)
 })
