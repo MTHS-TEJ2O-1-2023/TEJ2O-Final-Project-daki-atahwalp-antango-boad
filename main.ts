@@ -7,6 +7,7 @@
 
 // variables
 let signal: number = 0
+let rgbRing = robotbit.rgb()
 
 // on start (from Micro:bit proximity beacon)
 radio.setGroup(11)
@@ -27,7 +28,8 @@ radio.onReceivedString(function (receivedString) {
   basic.clearScreen()
   signal = radio.receivedPacket(RadioPacketProperty.SignalStrength)
   if (signal <= -60) {
-    basic.showString('*')
+    robotbit.rgb()
+    rgbRing.showColor(neopixel.colors(NeoPixelColors.Blue))
     basic.pause(200)
   }
 })
