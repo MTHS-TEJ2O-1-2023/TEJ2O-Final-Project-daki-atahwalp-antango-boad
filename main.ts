@@ -7,7 +7,7 @@
 
 // variables
 let signal: number = 0
-let rgbRing = robotbit.rgb()
+let rgbRing = neopixel.create(DigitalPin.P0, 12, NeoPixelMode.RGB)
 
 // on start (from Micro:bit proximity beacon)
 radio.setGroup(11)
@@ -17,19 +17,21 @@ basic.forever(function () {
   basic.pause(200)
 })
 
-// On shake flash '!'
+// On shake flash rgbRing full brightness
 input.onGesture(Gesture.Shake, function () {
-  basic.showString('!')
+  rgbRing.showColor(neopixel.colors(NeoPixelColors.Blue))
+  rgbRing.setBrightness(255)
   basic.pause(200)
 })
 
-// Check recieved signal strength and if signal strength is less than -60 display '*'
+// Check recieved signal strength and if signal strength is less than -60  flash rgbRing low brightness
 radio.onReceivedString(function (receivedString) {
   basic.clearScreen()
   signal = radio.receivedPacket(RadioPacketProperty.SignalStrength)
   if (signal <= -60) {
-    robotbit.rgb()
     rgbRing.showColor(neopixel.colors(NeoPixelColors.Blue))
-    basic.pause(200)
+    rgbRing.setBrightness(150)
+  } else {
+    rgbRing.showColor(neopixel.colors(NeoPixelColors.Black))
   }
 })
