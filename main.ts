@@ -19,9 +19,10 @@ basic.forever(function () {
 
 // On shake flash rgbRing full brightness
 input.onGesture(Gesture.Shake, function () {
-  rgbRing.showColor(neopixel.rgb(0, 0, 255))
   rgbRing.setBrightness(255)
-  basic.pause(200)
+  rgbRing.showColor(neopixel.rgb(0, 40, 255))
+  basic.pause(500)
+  rgbRing.showColor(neopixel.rgb(0, 0, 0))
 })
 
 // Check recieved signal strength and if signal strength is less than -60  flash rgbRing low brightness
@@ -29,8 +30,8 @@ radio.onReceivedString(function (receivedString) {
   basic.clearScreen()
   signal = radio.receivedPacket(RadioPacketProperty.SignalStrength)
   if (signal <= -60) {
-    rgbRing.showColor(neopixel.rgb(0, 0, 255))
-    rgbRing.setBrightness(150)
+    rgbRing.setBrightness(50)
+    rgbRing.showColor(neopixel.rgb(0, 20, 255))
   } else {
     rgbRing.showColor(neopixel.rgb(0, 0, 0))
   }
