@@ -13,26 +13,35 @@ let rgbRing = neopixel.create(DigitalPin.P0, 12, NeoPixelMode.RGB)
 radio.setGroup(11)
 radio.setTransmitPower(1)
 basic.forever(function () {
-  radio.sendString('1')
-  basic.pause(200)
+    radio.sendString('1')
+    basic.pause(200)
 })
 
 // On shake flash rgbRing full brightness
 input.onGesture(Gesture.Shake, function () {
-  rgbRing.setBrightness(255)
-  rgbRing.showColor(neopixel.rgb(0, 40, 255))
-  basic.pause(500)
-  rgbRing.showColor(neopixel.rgb(0, 0, 0))
+    rgbRing.setBrightness(255)
+    rgbRing.showColor(neopixel.rgb(0, 40, 255))
+    basic.pause(500)
+    rgbRing.showColor(neopixel.rgb(0, 0, 0))
 })
 
 // Check recieved signal strength and if signal strength is less than -60  flash rgbRing low brightness
 radio.onReceivedString(function (receivedString) {
-  basic.clearScreen()
+    basic.clearScreen()
+    signal = radio.receivedPacket(RadioPacketProperty.SignalStrength)
+    if (signal <= -60) {
+        rgbRing.setBrightness(50)
+        rgbRing.showColor(neopixel.rgb(0, 20, 255))
+    } else {
+        rgbRing.showColor(neopixel.rgb(0, 0, 0))
+    }
+})
+
+// Displaying signal strength
+radio.onReceivedString(function (receivedString) {
   signal = radio.receivedPacket(RadioPacketProperty.SignalStrength)
-  if (signal <= -60) {
-    rgbRing.setBrightness(50)
-    rgbRing.showColor(neopixel.rgb(0, 20, 255))
-  } else {
-    rgbRing.showColor(neopixel.rgb(0, 0, 0))
-  }
+  led.plotBarGraph(
+    Math.map(signal, -95, -42, 0, 9),
+    9
+  )
 })
