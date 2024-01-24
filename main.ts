@@ -7,7 +7,7 @@
 
 // variables
 let signal: number = 0
-let rgbRing = neopixel.create(DigitalPin.P0, 8, NeoPixelMode.RGB)
+const rgbRing = neopixel.create(DigitalPin.P0, 8, NeoPixelMode.RGB)
 
 // on start (from Micro:bit proximity beacon)
 radio.setGroup(11)
